@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Anniversary ❤️</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-left">❤️ Us</div>
+  <nav class="nav-right">
+    <a href="#home">Home</a>
+    <a href="#quiz">Quizzes</a>
+    <a href="#photos">Memories</a>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <h3> Happy First Anniversary 💕</h3>
+  <h1>Hey Robin, We have been together</h1>
+  <p id="timer">Loading...</p>
+</section>
+
+<section id="photos" class="photos">
+  <h2>Our Memories 📸</h2>
+  <div class="gallery">
+    <img src="images/photo1.jpg">
+    <img src="images/photo2.jpg">
+    <img src="images/photo3.jpg">
+  </div>
+</section>
+
+<section id="quiz" class="quiz">
+  <h2>How Well Do You Know Us? 💕</h2>
+
+  <div id="quiz-box">
+    <p id="question"></p>
+    <div id="answers"></div>
+    <button onclick="nextQuestion()">Next</button>
+  </div>
+
+  <p id="result"></p>
+</section>
+
+<footer>
+  <p>Forever yours ❤️</p>
+</footer>
+
+<script src="timer.js"></script>
+<script src="quiz.js"></script>
+</body>
+</html>
