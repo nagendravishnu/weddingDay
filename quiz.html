@@ -7,7 +7,9 @@
 </head>
 <body>
 
-<header class="top-header">Happy Valentine’s Day ❤️</header>
+<header class="top-header">
+    Happy Valentine’s Day ❤️
+</header>
 
 <section class="center-area">
 
@@ -15,15 +17,15 @@
     <div class="card" id="rulesBox">
         <h2>Quiz Rules 💖</h2>
         <ul class="rules">
-            <li>No wrong answers, maybe some 😉</li>
+            <li>Some questions have graded answers</li>
+            <li>Some questions have only one right answer</li>
             <li>20 seconds per question</li>
-            <li>75 marks to pass</li>
-            <li>Perfect: 5 | Not bad: 3 | Okay: 1 | Bad: 0</li>
-            <li>20 questions total</li>
+            <li>Green = 5 | Orange = 3 | Blue = 1 | Red = 0</li>
         </ul>
 
         <label class="checkbox">
-            <input type="checkbox" id="accept"> I accept & I’m ready
+            <input type="checkbox" id="accept">
+            I accept & I’m ready 💕
         </label>
 
         <button id="startQuiz" disabled>Start Quiz</button>
@@ -38,6 +40,12 @@
 
         <h2 id="question"></h2>
         <div class="options-big" id="options"></div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="quiz-big hidden" id="resultBox">
+        <h1>Your Score 💖</h1>
+        <div class="final-score" id="finalScore"></div>
     </div>
 
 </section>

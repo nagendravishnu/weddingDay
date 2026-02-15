@@ -12,33 +12,20 @@ body {
     font-size: 22px;
 }
 
-.together {
-    text-align: center;
-    padding: 30px;
-}
-
 .center-area {
     display: flex;
     justify-content: center;
     padding: 40px;
 }
 
-.card {
+.card, .quiz-big {
     background: #ffe4ec;
     padding: 40px;
     border-radius: 20px;
-    width: 90%;
-    max-width: 700px;
+    width: 95%;
+    max-width: 900px;
     box-shadow: 0 20px 40px rgba(0,0,0,.15);
     text-align: center;
-}
-
-.quiz-big {
-    width: 95%;
-    background: #ffe4ec;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 40px rgba(0,0,0,.15);
 }
 
 .quiz-top {
@@ -73,20 +60,20 @@ body {
 .blue { background: #cfe4ff; }
 .red { background: #ffc1c1; }
 
-button, a {
+.final-score {
+    font-size: 96px;
+    font-weight: bold;
+    margin-top: 30px;
+    color: #ff5f9e;
+}
+
+button {
     padding: 14px 26px;
     background: #ff5f9e;
     color: white;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    text-decoration: none;
-}
-
-.outline {
-    background: white;
-    color: #ff5f9e;
-    border: 2px solid #ff5f9e;
 }
 
 .checkbox {
@@ -96,10 +83,4 @@ button, a {
 
 .hidden {
     display: none;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    color: #777;
 }
