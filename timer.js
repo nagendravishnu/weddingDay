@@ -1,8 +1,7 @@
-// 🔴 CHANGE THIS DATE 🔴
-// Format: new Date("YYYY-MM-DDTHH:MM:SS")
-const startDate = new Date("2022-10-17T00:00:00"); // <-- EDIT ME
+// CHANGE THIS DATE
+const startDate = new Date("2022-10-16T00:00:00");
 
-function updateTimer() {
+function updateTogetherTimer() {
   const now = new Date();
   const diff = now - startDate;
 
@@ -11,13 +10,9 @@ function updateTimer() {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
 
-  const displayHours = hours % 24;
-  const displayMinutes = minutes % 60;
-  const displaySeconds = seconds % 60;
-
-  document.getElementById("timer").innerHTML =
-    `${days} Days ${displayHours} Hours ${displayMinutes} Minutes ${displaySeconds} Seconds`;
+  document.getElementById("together-timer").textContent =
+    `${days} Days ${hours % 24} Hours ${minutes % 60} Minutes ${seconds % 60} Seconds`;
 }
 
-setInterval(updateTimer, 1000);
-updateTimer();
+setInterval(updateTogetherTimer, 1000);
+updateTogetherTimer();

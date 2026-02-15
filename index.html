@@ -1,53 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Happy Anniversary ❤️</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>Us ❤️</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header class="navbar">
-  <div class="nav-left">❤️ Us</div>
-  <nav class="nav-right">
-    <a href="#home">Home</a>
-    <a href="#quiz">Quizzes</a>
-    <a href="#photos">Memories</a>
-  </nav>
+<!-- HEADER -->
+<header class="header">
+    ❤️ Us
 </header>
 
-<section id="home" class="hero">
-  <h3> Happy First Anniversary 💕</h3>
-  <h1>Hey Robin, We have been together</h1>
-  <p id="timer">Loading...</p>
-</section>
+<!-- MAIN -->
+<main>
 
-<section id="photos" class="photos">
-  <h2>Our Memories 📸</h2>
-  <div class="gallery">
-    <img src="images/photo1.jpg">
-    <img src="images/photo2.jpg">
-    <img src="images/photo3.jpg">
-  </div>
-</section>
+    <!-- TOGETHER TIMER -->
+    <section class="together">
+        <h1>Happy Valentine’s Day ❤️</h1>
+        <h2>Hey Robin, We have been together</h2>
+        <p id="togetherTimer"></p>
+    </section>
 
-<section id="quiz" class="quiz">
-  <h2>How Well Do You Know Us? 💕</h2>
+    <!-- QUIZ CONTAINER -->
+    <section class="quiz-section">
 
-  <div id="quiz-box">
-    <p id="question"></p>
-    <div id="answers"></div>
-    <button onclick="nextQuestion()">Next</button>
-  </div>
+        <div class="quiz-box" id="quizBox">
 
-  <p id="result"></p>
-</section>
+            <div class="quiz-timer" id="quizTimer">30s</div>
 
-<footer>
-  <p>Forever yours ❤️</p>
+            <!-- START SCREEN -->
+            <div id="startScreen">
+                <p class="quiz-text">
+                    We need to verify if it's really you babe, let's go you got 30 seconds
+                </p>
+                <button class="primary-btn" onclick="startQuiz()">Let’s Go</button>
+            </div>
+
+            <!-- QUIZ SCREEN -->
+            <div id="quizScreen" class="hidden">
+                <p class="quiz-text">
+                    Type our dog_name + my_birthday (MMDDYYYY)
+                </p>
+
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="answerInput"
+                        placeholder="Enter answer"
+                    />
+                    <button class="toggle-btn" onclick="togglePassword()">👁</button>
+                </div>
+
+                <button class="primary-btn" onclick="submitAnswer()">Submit</button>
+
+                <button class="secondary-btn hidden" id="hintBtn" onclick="showHint()">Hint</button>
+                <p id="hintText" class="hint hidden">⬛(-k)🔑🎂</p>
+
+                <button class="danger-btn hidden" id="callBtn">Just call me</button>
+            </div>
+
+            <!-- SUCCESS SCREEN -->
+            <div id="successScreen" class="hidden">
+                <p class="quiz-text">Okay… it’s really you ❤️</p>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn">QUIZ</button>
+                    <button class="nav-btn">Timeline View</button>
+                    <button class="nav-btn">Photos of Journey</button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    Made with ❤️
 </footer>
 
-<script src="timer.js"></script>
-<script src="quiz.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
