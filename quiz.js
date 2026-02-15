@@ -1,60 +1,85 @@
-const quizData = [
-  {
-    question: "Where did we first meet?",
-    answers: ["At work", "At a party", "Online", "By fate ❤️"],
-    correct: 3
-  },
-  {
-    question: "What’s our favorite thing to do together?",
-    answers: ["Travel", "Watch movies", "Eat good food", "All of the above"],
-    correct: 3
-  },
-  {
-    question: "Who loves the other more?",
-    answers: ["You", "Me", "Both equally ❤️", "Impossible to measure"],
-    correct: 2
-  }
+const questions = [
+    {
+        q: "When did this start?",
+        a: [
+            { t: "2018", s: 5, c: "green" },
+            { t: "2022", s: 3, c: "orange" },
+            { t: "1997", s: 1, c: "blue" },
+            { t: "2025", s: 0, c: "red" }
+        ]
+    },
+    {
+        q: "Sample question",
+        a: [
+            { t: "a", s: 5, c: "green" },
+            { t: "b", s: 3, c: "orange" },
+            { t: "c", s: 1, c: "blue" },
+            { t: "d", s: 0, c: "red" }
+        ]
+    }
 ];
 
-let currentQuestion = 0;
+let index = 0;
 let score = 0;
+let time = 20;
+let timer;
+let locked = false;
 
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const resultEl = document.getElementById("result");
+document.getElementById("accept").onchange = e =>
+    document.getElementById("startQuiz").disabled = !e.target.checked;
+
+document.getElementById("startQuiz").onclick = () => {
+    document.getElementById("rulesBox").classList.add("hidden");
+    document.getElementById("quizBox").classList.remove("hidden");
+    loadQuestion();
+};
 
 function loadQuestion() {
-  const q = quizData[currentQuestion];
-  questionEl.textContent = q.question;
-  answersEl.innerHTML = "";
+    if (index >= questions.length) {
+        alert(`Quiz done ❤️ Final score: ${score}`);
+        return;
+    }
 
-  q.answers.forEach((answer, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = answer;
-    btn.onclick = () => selectAnswer(index);
-    answersEl.appendChild(btn);
-  });
+    locked = false;
+    time = 20;
+    document.getElementById("timer").textContent = time + "s";
+    document.getElementById("score").textContent = "Score: " + score;
+    document.getElementById("question").textContent = questions[index].q;
+
+    const options = document.getElementById("options");
+    options.innerHTML = "";
+
+    questions[index].a.forEach(opt => {
+        const div = document.createElement("div");
+        div.className = "option-big";
+        div.textContent = opt.t;
+
+        div.onclick = () => {
+            if (locked) return;
+            locked = true;
+            div.classList.add(opt.c);
+            score += opt.s;
+            document.getElementById("score").textContent = "Score: " + score;
+            setTimeout(nextQuestion, 800);
+        };
+
+        options.appendChild(div);
+    });
+
+    startTimer();
 }
 
-function selectAnswer(index) {
-  if (index === quizData[currentQuestion].correct) {
-    score++;
-  }
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        time--;
+        document.getElementById("timer").textContent = time + "s";
+        if (time <= 0) nextQuestion();
+    }, 1000);
 }
 
 function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < quizData.length) {
+    clearInterval(timer);
+    index++;
     loadQuestion();
-  } else {
-    showResult();
-  }
 }
-
-function showResult() {
-  document.getElementById("quiz-box").style.display = "none";
-  resultEl.innerHTML = `You got ${score} / ${quizData.length} 💖<br><br>
-  No matter the score, I choose you every day.`;
-}
-
-loadQuestion();

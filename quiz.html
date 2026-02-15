@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz ❤️</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top-header">Happy Valentine’s Day ❤️</header>
+
+<section class="center-area">
+
+    <!-- RULES -->
+    <div class="card" id="rulesBox">
+        <h2>Quiz Rules 💖</h2>
+        <ul class="rules">
+            <li>No wrong answers, maybe some 😉</li>
+            <li>20 seconds per question</li>
+            <li>75 marks to pass</li>
+            <li>Perfect: 5 | Not bad: 3 | Okay: 1 | Bad: 0</li>
+            <li>20 questions total</li>
+        </ul>
+
+        <label class="checkbox">
+            <input type="checkbox" id="accept"> I accept & I’m ready
+        </label>
+
+        <button id="startQuiz" disabled>Start Quiz</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="quiz-big hidden" id="quizBox">
+        <div class="quiz-top">
+            <span id="score">Score: 0</span>
+            <span id="timer">20s</span>
+        </div>
+
+        <h2 id="question"></h2>
+        <div class="options-big" id="options"></div>
+    </div>
+
+</section>
+
+<script src="quiz.js"></script>
+</body>
+</html>

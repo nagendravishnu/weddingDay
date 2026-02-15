@@ -1,146 +1,105 @@
-* {
-    box-sizing: border-box;
-    font-family: "Segoe UI", sans-serif;
-}
-
 body {
     margin: 0;
+    font-family: "Segoe UI", sans-serif;
     background: #fff5f7;
-    color: #000;
 }
 
-/* HEADER */
-.header {
+.top-header {
     background: #ff8fb1;
     color: white;
     text-align: center;
-    padding: 15px;
-    font-size: 20px;
+    padding: 20px;
+    font-size: 22px;
 }
 
-/* TOGETHER SECTION */
 .together {
     text-align: center;
-    margin-top: 60px;
+    padding: 30px;
 }
 
-.together h1 {
-    color: #ff5f9e;
-}
-
-/* QUIZ SECTION */
-.quiz-section {
+.center-area {
     display: flex;
     justify-content: center;
-    margin: 80px 0;
+    padding: 40px;
 }
 
-.quiz-box {
-    position: relative;
+.card {
     background: #ffe4ec;
-    width: 420px;
-    padding: 40px 30px;
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.15);
     text-align: center;
 }
 
-/* TIMER */
-.quiz-timer {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-weight: bold;
-    color: #ff5f9e;
+.quiz-big {
+    width: 95%;
+    background: #ffe4ec;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.15);
 }
 
-/* TEXT */
-.quiz-text {
-    font-size: 18px;
-    margin-bottom: 25px;
-}
-
-/* INPUT */
-.input-wrapper {
+.quiz-top {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 30px;
 }
 
-input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+.options-big {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 25px;
+    margin-top: 40px;
 }
 
-/* BUTTONS */
-button {
+.option-big {
+    padding: 30px;
+    background: white;
+    border-radius: 18px;
+    font-size: 20px;
     cursor: pointer;
+    transition: .25s;
 }
 
-.primary-btn {
+.option-big:hover {
+    transform: scale(1.03);
+}
+
+.green { background: #b6f2c2; }
+.orange { background: #ffd8a8; }
+.blue { background: #cfe4ff; }
+.red { background: #ffc1c1; }
+
+button, a {
+    padding: 14px 26px;
     background: #ff5f9e;
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-.secondary-btn {
-    margin-top: 15px;
-    background: none;
-    border: 1px dashed #ff5f9e;
-    padding: 8px 15px;
-    border-radius: 8px;
-    color: #ff5f9e;
-}
-
-.danger-btn {
-    margin-top: 15px;
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-}
-
-.toggle-btn {
-    border: none;
-    background: #ffd1dc;
-    border-radius: 8px;
-    padding: 0 10px;
-}
-
-/* SUCCESS NAV */
-.nav-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.nav-btn {
+.outline {
     background: white;
+    color: #ff5f9e;
     border: 2px solid #ff5f9e;
-    padding: 10px 15px;
-    border-radius: 10px;
 }
 
-/* UTILS */
+.checkbox {
+    display: block;
+    margin: 20px 0;
+}
+
 .hidden {
     display: none;
 }
 
-.hint {
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-/* FOOTER */
-.footer {
+footer {
     text-align: center;
     padding: 20px;
-    color: #999;
+    color: #777;
 }

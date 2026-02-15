@@ -1,87 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Us ❤️</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-    ❤️ Us
-</header>
+<header class="top-header">❤️ Us</header>
 
-<!-- MAIN -->
-<main>
+<section class="together">
+    <h1>Happy Valentine’s Day ❤️</h1>
+    <h2>Hey Robin, We have been together</h2>
+    <div id="togetherTimer"></div>
+</section>
 
-    <!-- TOGETHER TIMER -->
-    <section class="together">
-        <h1>Happy Valentine’s Day ❤️</h1>
-        <h2>Hey Robin, We have been together</h2>
-        <p id="togetherTimer"></p>
-    </section>
+<section class="center-area">
 
-    <!-- QUIZ CONTAINER -->
-    <section class="quiz-section">
+    <!-- START -->
+    <div class="card" id="startBox">
+        <h2>Let’s Explore the site 💕</h2>
+        <button onclick="startVerification()">Start</button>
+    </div>
 
-        <div class="quiz-box" id="quizBox">
-
-            <div class="quiz-timer" id="quizTimer">30s</div>
-
-            <!-- START SCREEN -->
-            <div id="startScreen">
-                <p class="quiz-text">
-                    We need to verify if it's really you babe, let's go you got 30 seconds
-                </p>
-                <button class="primary-btn" onclick="startQuiz()">Let’s Go</button>
-            </div>
-
-            <!-- QUIZ SCREEN -->
-            <div id="quizScreen" class="hidden">
-                <p class="quiz-text">
-                    Type our dog_name + my_birthday (MMDDYYYY)
-                </p>
-
-                <div class="input-wrapper">
-                    <input
-                        type="password"
-                        id="answerInput"
-                        placeholder="Enter answer"
-                    />
-                    <button class="toggle-btn" onclick="togglePassword()">👁</button>
-                </div>
-
-                <button class="primary-btn" onclick="submitAnswer()">Submit</button>
-
-                <button class="secondary-btn hidden" id="hintBtn" onclick="showHint()">Hint</button>
-                <p id="hintText" class="hint hidden">⬛(-k)🔑🎂</p>
-
-                <button class="danger-btn hidden" id="callBtn">Just call me</button>
-            </div>
-
-            <!-- SUCCESS SCREEN -->
-            <div id="successScreen" class="hidden">
-                <p class="quiz-text">Okay… it’s really you ❤️</p>
-
-                <div class="nav-buttons">
-                    <button class="nav-btn">QUIZ</button>
-                    <button class="nav-btn">Timeline View</button>
-                    <button class="nav-btn">Photos of Journey</button>
-                </div>
-            </div>
-
+    <!-- VERIFY -->
+    <div class="card hidden" id="verifyBox">
+        <div class="card-header">
+            <span id="verifyTimer">30s</span>
         </div>
 
-    </section>
+        <h3>We need to verify if it’s really you babe</h3>
+        <p>You got 30 seconds 😉</p>
 
-</main>
+        <p><b>dog_name + my_birthday (MMDDYYYY)</b></p>
 
-<!-- FOOTER -->
-<footer class="footer">
-    Made with ❤️
-</footer>
+        <input type="password" id="answer" placeholder="Enter answer">
+        <label class="checkbox">
+            <input type="checkbox" onclick="togglePassword()"> Show password
+        </label>
 
-<script src="script.js"></script>
+        <button onclick="checkAnswer()">Let’s Go</button>
+        <button class="outline hidden" id="hintBtn" onclick="showHint()">Hint</button>
+        <button class="outline hidden" id="callBtn">Just call me</button>
+
+        <p id="hintText"></p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="card hidden" id="successBox">
+        <h2>Okay… it’s really you 💖</h2>
+        <div class="nav-buttons">
+            <a href="quiz.html">QUIZ</a>
+            <button disabled>Timeline</button>
+            <button disabled>Photos</button>
+        </div>
+    </div>
+
+</section>
+
+<footer>Made with ❤️</footer>
+
+<script src="home.js"></script>
 </body>
 </html>
