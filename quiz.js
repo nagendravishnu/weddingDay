@@ -63,6 +63,46 @@ const photoQuestions = [
             { t: "Chennai - Jan 4, 2023", c: "red" },
             { t: "Coimbatore - Oct 1, 2022", c: "green" }
         ]
+    },
+    {
+        q: "That was an exciting day, we went for a movie! Can you guess which one?",
+        img: "images/quiz7.jpg",
+        a: [
+            { t: "Guardians of Galaxy Vol3", c: "orange" },
+            { t: "Love Today", c: "red" },
+            { t: "Ant Man 3", c: "blue" },
+            { t: "Avatar 2", c: "green" }
+        ]
+    },
+    {
+        q: "What does this picture present for you?",
+        img: "images/quiz8.jpg",
+        a: [
+            { t: "After First Kiss", c: "green" },
+            { t: "After First Fight", c: "red" },
+            { t: "After First Date", c: "orange" },
+            { t: "After Speaking 8hrs straight", c: "blue" }
+        ]
+    },
+    {
+        q: "What does this picture present for you?",
+        img: "images/quiz9.jpg",
+        a: [
+            { t: "After First Kiss", c: "red" },
+            { t: "After First Fight", c: "green" },
+            { t: "After First Date", c: "orange" },
+            { t: "After Speaking 8hrs straight", c: "blue" }
+        ]
+    },
+    {
+        q: "Where does this photo was Taken",
+        img: "images/quiz10.jpg",
+        a: [
+            { t: "Chennai", c: "blue" },
+            { t: "Coimbatore", c: "orange" },
+            { t: "Chittur", c: "red" },
+            { t: "Palakkad", c: "green" }
+        ]
     }
 ];
 
