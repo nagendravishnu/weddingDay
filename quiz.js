@@ -5,7 +5,7 @@ const SCORE_MAP = {
     red: 0
 };
 
-const questions = [
+const textQuestions = [
     {
         q: "When did this start? It's not a trick question but you have to guess hard",
         a: [
@@ -53,6 +53,20 @@ const questions = [
     }
 ];
 
+const photoQuestions = [
+    {
+        q: "When and where did we take this photo?",
+        img: "images/quiz6.jpg",
+        a: [
+            { t: "Chennai - Dec 10, 2022", c: "blue" },
+            { t: "Coimbatore - sept 24, 2022", c: "orange" },
+            { t: "Chennai - Jan 4, 2023", c: "red" },
+            { t: "Coimbatore - Oct 1, 2022", c: "green" }
+        ]
+    }
+];
+
+let isPhotoQuiz = false;
 let index = 0;
 let score = 0;
 let time = 20;
@@ -69,22 +83,41 @@ document.getElementById("startQuiz").onclick = () => {
 };
 
 function loadQuestion() {
-    if (index >= questions.length) {
-        endQuiz();
-        return;
+    const currentQuestions = isPhotoQuiz ? photoQuestions : textQuestions;
+    
+    if (index >= currentQuestions.length) {
+        if (!isPhotoQuiz) {
+            showPhotoTransition();
+            return;
+        } else {
+            endQuiz();
+            return;
+        }
     }
 
     locked = false;
     time = 20;
 
-    document.getElementById("timer").textContent = time + "s";
-    document.getElementById("score").textContent = "Score: " + score;
-    document.getElementById("question").textContent = questions[index].q;
+    const timerEl = isPhotoQuiz ? "photoTimer" : "timer";
+    const scoreEl = isPhotoQuiz ? "photoScore" : "score";
+    const optionsEl = isPhotoQuiz ? "photoOptions" : "options";
 
-    const options = document.getElementById("options");
+    document.getElementById(timerEl).textContent = time + "s";
+    document.getElementById(scoreEl).textContent = "Score: " + score;
+    
+    const currQuestion = currentQuestions[index];
+    
+    if (isPhotoQuiz) {
+        document.getElementById("photoQuestion").textContent = currQuestion.q;
+        document.getElementById("photoImage").src = currQuestion.img;
+    } else {
+        document.getElementById("question").textContent = currQuestion.q;
+    }
+
+    const options = document.getElementById(optionsEl);
     options.innerHTML = "";
 
-    questions[index].a.forEach(opt => {
+    currQuestion.a.forEach(opt => {
         const div = document.createElement("div");
         div.className = "option-big";
         div.textContent = opt.t;
@@ -96,21 +129,21 @@ function loadQuestion() {
             div.classList.add(opt.c);
             score += SCORE_MAP[opt.c];
 
-            document.getElementById("score").textContent = "Score: " + score;
+            document.getElementById(scoreEl).textContent = "Score: " + score;
             setTimeout(nextQuestion, 900);
         };
 
         options.appendChild(div);
     });
 
-    startTimer();
+    startTimer(timerEl);
 }
 
-function startTimer() {
+function startTimer(timerEl = "timer") {
     clearInterval(timer);
     timer = setInterval(() => {
         time--;
-        document.getElementById("timer").textContent = time + "s";
+        document.getElementById(timerEl).textContent = time + "s";
         if (time <= 0) nextQuestion();
     }, 1000);
 }
@@ -121,9 +154,23 @@ function nextQuestion() {
     loadQuestion();
 }
 
-function endQuiz() {
+function showPhotoTransition() {
     clearInterval(timer);
     document.getElementById("quizBox").classList.add("hidden");
+    document.getElementById("photoTransitionBox").classList.remove("hidden");
+}
+
+function startPhotoQuiz() {
+    isPhotoQuiz = true;
+    index = 0;
+    document.getElementById("photoTransitionBox").classList.add("hidden");
+    document.getElementById("photoQuizBox").classList.remove("hidden");
+    loadQuestion();
+}
+
+function endQuiz() {
+    clearInterval(timer);
+    document.getElementById("photoQuizBox").classList.add("hidden");
     document.getElementById("resultBox").classList.remove("hidden");
     document.getElementById("finalScore").textContent = score;
 }

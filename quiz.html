@@ -42,6 +42,28 @@
         <div class="options-big" id="options"></div>
     </div>
 
+    <!-- PHOTO TRANSITION -->
+    <div class="card hidden" id="photoTransitionBox">
+        <h2>We're gonna start photo based quiz 📸</h2>
+        <p>Test your memory with our favorite moments!</p>
+        <button class="photo-start-btn" onclick="startPhotoQuiz()">Start</button>
+    </div>
+
+    <!-- PHOTO QUIZ -->
+    <div class="quiz-big hidden" id="photoQuizBox">
+        <div class="quiz-top">
+            <span id="photoScore">Score: 0</span>
+            <span id="photoTimer">20s</span>
+        </div>
+        <h2 id="photoQuestion"></h2>
+        <div class="photo-quiz-container">
+            <div class="photo-section">
+                <img id="photoImage" src="" alt="Quiz Photo" class="quiz-photo">
+            </div>
+        </div>
+        <div class="options-big" id="photoOptions"></div>
+    </div>
+
     <!-- RESULT -->
     <div class="quiz-big hidden" id="resultBox">
         <h1>Your Score 💖</h1>
