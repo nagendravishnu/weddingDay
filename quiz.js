@@ -212,5 +212,39 @@ function endQuiz() {
     clearInterval(timer);
     document.getElementById("photoQuizBox").classList.add("hidden");
     document.getElementById("resultBox").classList.remove("hidden");
-    document.getElementById("finalScore").textContent = score;
+    
+    const totalQuestions = textQuestions.length + photoQuestions.length;
+    const maxScore = totalQuestions * 5;
+    const percentage = Math.round((score / maxScore) * 100);
+    
+    document.getElementById("finalScore").textContent = score + " / " + maxScore;
+    document.getElementById("scorePercentage").textContent = percentage + "%";
+    
+    let message = "";
+    if (percentage >= 90) message = "Outstanding! You know us so well 🌟";
+    else if (percentage >= 80) message = "Excellent! You're amazing 💫";
+    else if (percentage >= 70) message = "Great job! You did it! 🎉";
+    else if (percentage >= 50) message = "Good effort! Better luck next time 💪";
+    else message = "Keep trying! You'll do better 📚";
+    
+    document.getElementById("resultMessage").textContent = message;
+    
+    if (percentage >= 70) {
+        document.getElementById("passwordSection").classList.remove("hidden");
+        document.getElementById("passwordField").value = "Qsg7889934%^@^**";
+        document.getElementById("timelineLink").classList.remove("hidden");
+    }
+}
+
+function copyPassword() {
+    const passwordField = document.getElementById("passwordField");
+    passwordField.select();
+    document.execCommand("copy");
+    
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = "✅ Copied!";
+    setTimeout(() => {
+        btn.textContent = originalText;
+    }, 2000);
 }

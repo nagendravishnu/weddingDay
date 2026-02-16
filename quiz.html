@@ -90,7 +90,27 @@
     <!-- RESULT -->
     <div class="quiz-big hidden" id="resultBox">
         <h1>Your Score 💖</h1>
-        <div class="final-score" id="finalScore"></div>
+        <div class="score-display">
+            <div class="final-score" id="finalScore"></div>
+            <div class="score-percentage" id="scorePercentage"></div>
+        </div>
+
+        <div class="result-message" id="resultMessage"></div>
+
+        <div class="password-section hidden" id="passwordSection">
+            <h3>🔐 Unlock Special Content</h3>
+            <p>Congratulations! You scored above 70%. Here's your exclusive password:</p>
+            <div class="password-display">
+                <input type="text" id="passwordField" readonly>
+                <button class="copy-btn" onclick="copyPassword()">📋 Copy</button>
+            </div>
+            <p class="password-hint">Use this password to access Timeline and other exclusive content</p>
+        </div>
+
+        <div class="result-actions">
+            <button onclick="location.reload()">🔄 Retake Quiz</button>
+            <a href="timeline.html" class="timeline-link hidden" id="timelineLink">📅 Go to Timeline</a>
+        </div>
     </div>
 
 </section>
