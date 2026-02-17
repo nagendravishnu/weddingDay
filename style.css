@@ -807,6 +807,70 @@ footer {
     font-weight: bold;
 }
 
+/* Baby name generator styles */
+.gender-buttons {
+    display: flex;
+    gap: 12px;
+    margin: 18px 0;
+}
+.gen-btn {
+    background: linear-gradient(135deg,#ff8fb1,#ff5f9e);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.name-area {
+    margin-top: 18px;
+}
+.thinking {
+    font-size: 20px;
+    color: #ff5f9e;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.name-display {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #333;
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.name-display.circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    word-break: break-word;
+}
+
+.name-display.large {
+    max-width: 460px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.name-index {
+    margin-top: 8px;
+    color: #ff5f9e;
+    font-weight: bold;
+}
+.name-controls { margin-top: 12px; }
+.next-btn { padding: 10px 18px; border-radius: 8px; background:#ff5f9e; color:white; border:none; cursor:pointer; }
+
 /* TIMELINE SECTION */
 .timeline-section {
     width: 100%;

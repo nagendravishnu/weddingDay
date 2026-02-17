@@ -22,24 +22,41 @@
 
 <section class="center-area">
 
-    <div class="card">
-        <h2>👶 Baby Name 👶</h2>
-        <div class="coming-soon">
-            <p style="font-size: 48px; margin: 20px 0;">🤰</p>
-            <h3 style="color: #ff5f9e; margin: 20px 0;">Coming Soon!</h3>
-            <p style="font-size: 18px; color: #666; margin: 20px 0;">
-                We're still deciding on the perfect name for our little one 💕
-            </p>
-            <p style="font-size: 48px; margin: 30px 0;">❤️👨‍👩‍👧</p>
-            <p style="color: #999; margin-top: 30px;">
-                Check back soon for updates!
-            </p>
+    <div class="card" id="passwordVerifyBox">
+        <h2>🔐 Unlock Baby Name Generator</h2>
+        <p>Enter the password from the quiz to unlock the generator</p>
+        <div class="password-input-section">
+            <input type="password" id="babynamePassword" placeholder="Enter password" class="puzzle-password-input">
+            <label class="checkbox">
+                <input type="checkbox" onclick="toggleBabynamePassword()"> Show password
+            </label>
+            <button id="babyUnlockBtn" type="button" onclick="verifyBabynamePassword()">Unlock</button>
+        </div>
+        <p id="babyPasswordError" class="password-error"></p>
+    </div>
+
+    <div class="card hidden" id="generatorBox">
+        <h2>👶 Baby Name Generator</h2>
+        <p>Pick a category and press <strong>Next</strong> to receive a name. Click <strong>Next</strong> to get a new suggestion.</p>
+
+        <div class="gender-buttons">
+            <button class="gen-btn" id="boyBtn" onclick="selectGender('boy')">Boy</button>
+            <button class="gen-btn" id="girlBtn" onclick="selectGender('girl')">Girl</button>
+        </div>
+
+        <div class="name-area hidden" id="nameArea">
+            <div id="thinking" class="thinking hidden">Thinking...</div>
+            <div id="nameDisplay" class="name-display"></div>
+            <div id="nameIndex" class="name-index"></div>
+            <div class="name-controls">
+                <button id="nextBtn" class="next-btn" onclick="nextName()">Next</button>
+            </div>
         </div>
     </div>
 
 </section>
 
 <footer>Made with ❤️</footer>
-
+<script src="babyname.js"></script>
 </body>
 </html>
