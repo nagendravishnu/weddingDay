@@ -1,4 +1,4 @@
-const CORRECT_ANSWER = "blackey+0706997";
+const CORRECT_ANSWER = "blackey+06071997";
 let attempts = 0;
 let timeLeft = 30;
 let quizInterval;

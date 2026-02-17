@@ -1,5 +1,5 @@
 // Together timer
-const startDate = new Date("2018-02-14T00:00:00");
+const startDate = new Date("2022-10-16T00:00:00");
 
 setInterval(() => {
     const now = new Date();
@@ -40,7 +40,7 @@ function checkAnswer() {
     attempts++;
     const val = document.getElementById("answer").value;
 
-    if (val === "blackey+0706997") {
+    if (val === "blackey06071997") {
         clearInterval(timer);
         document.getElementById("verifyBox").classList.add("hidden");
         document.getElementById("successBox").classList.remove("hidden");

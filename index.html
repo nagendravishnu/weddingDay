@@ -34,10 +34,10 @@
 
         <p><b>dog_name + my_birthday (MMDDYYYY)</b></p>
 
-        <input type="password" id="answer" placeholder="Enter answer">
-        <label class="checkbox">
-            <input type="checkbox" onclick="togglePassword()"> Show password
-        </label>
+        <div class="password-input-wrapper">
+            <input type="password" id="answer" placeholder="Enter answer">
+            <button type="button" class="password-toggle" onclick="togglePassword()" title="Show/Hide">👁️</button>
+        </div>
 
         <button onclick="checkAnswer()">Let’s Go</button>
         <button class="outline hidden" id="hintBtn" onclick="showHint()">Hint</button>
