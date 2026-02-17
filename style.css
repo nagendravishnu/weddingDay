@@ -2,6 +2,76 @@
     box-sizing: border-box;
 }
 
+/* Responsive adjustments for tablet and mobile */
+
+/* Tablet and small laptops */
+@media (max-width: 900px) {
+    .header-content { padding: 16px 20px; }
+    .header-title { font-size: 22px; }
+    .nav-tab { padding: 8px 12px; font-size: 13px; }
+    .together { padding: 40px 20px; }
+    .together h1 { font-size: 32px; }
+    .together h2 { font-size: 18px; }
+    #togetherTimer { font-size: 20px; }
+    .center-area { padding: 30px 16px; }
+    .card, .quiz-big { padding: 30px 20px; max-width: 760px; }
+    #startBox button, .photo-start-btn { padding: 16px 40px; font-size: 18px; }
+    .options-big { grid-template-columns: 1fr; gap: 18px; }
+    .photo-quiz-container { gap: 20px; }
+    .quiz-photo { max-height: 360px; }
+    .nav-buttons a, .nav-buttons button { min-width: 120px; padding: 14px 20px; font-size: 16px; }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .header-content { padding: 12px 14px; }
+    .header-title { font-size: 18px; }
+    .header-nav { gap: 8px; }
+    .nav-tab { padding: 6px 8px; font-size: 13px; border-radius: 10px; }
+    .together { padding: 28px 12px; }
+    .together h1 { font-size: 24px; }
+    .together h2 { font-size: 16px; }
+    #togetherTimer { font-size: 16px; }
+    .center-area { padding: 18px 12px; }
+    .card, .quiz-big { padding: 20px 16px; border-radius: 18px; width: 100%; }
+    .card { max-width: 100%; }
+    .nav-buttons { flex-direction: column; align-items: stretch; }
+    .nav-buttons a, .nav-buttons button { width: 100%; padding: 14px 18px; font-size: 16px; }
+    #startBox button, .photo-start-btn { padding: 14px 18px; font-size: 16px; }
+    .options-big { grid-template-columns: 1fr; gap: 14px; }
+    .option-big { padding: 18px; font-size: 16px; }
+    .final-score { font-size: 64px; }
+    .score-percentage { font-size: 36px; }
+
+    /* Make images and canvas responsive */
+    img, .quiz-photo, canvas { max-width: 100%; height: auto; }
+
+    /* Password and inputs full-width and easy tap targets */
+    .password-input-wrapper input, .puzzle-password-input, #answer, #passwordField {
+        padding: 14px 16px; font-size: 16px;
+    }
+
+    /* Puzzle area responsiveness */
+    .puzzle-canvas-wrapper { width: 100%; overflow: auto; }
+    #puzzleCanvas { width: 100% !important; height: auto !important; }
+    .puzzle-pieces-area { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .puzzle-piece { min-width: 64px; min-height: 64px; padding: 6px; font-size: 12px; }
+
+    /* Baby name display adjustments */
+    .name-display { font-size: 20px; padding: 12px; }
+    .name-display.circle { width: 140px; height: 140px; }
+    .name-display.large { width: auto; font-size: 16px; padding: 12px; }
+
+    /* Tighten footer */
+    footer { padding: 18px; font-size: 14px; }
+}
+
+/* Minor utility: make header nav horizontally scrollable on very small widths */
+@media (max-width: 360px) {
+    .header-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .header-nav::-webkit-scrollbar { display: none; }
+}
+
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
