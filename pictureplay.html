@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picture Play 🧩</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top-header">
+    <div class="header-content">
+        <div class="header-title">Picture Play 🧩</div>
+        <nav class="header-nav">
+            <a href="index.html" class="nav-tab">Home</a>
+            <a href="quiz.html" class="nav-tab">Quiz</a>
+            <a href="timeline.html" class="nav-tab">Timeline</a>
+            <a href="babyname.html" class="nav-tab">Baby Name</a>
+        </nav>
+    </div>
+</header>
+
+<section class="center-area">
+
+    <!-- PASSWORD VERIFICATION -->
+    <div class="card" id="passwordVerifyBox">
+        <h2>🔐 Unlock Picture Play</h2>
+        <p>Enter your password from the quiz</p>
+        
+        <div class="password-input-section">
+            <input type="password" id="pictureplayPassword" placeholder="Enter password" class="puzzle-password-input">
+            <label class="checkbox">
+                <input type="checkbox" onclick="togglePicturePlayPassword()"> Show password
+            </label>
+            <button onclick="verifyPicturePlayPassword()">Unlock</button>
+        </div>
+        <p id="passwordError" class="password-error"></p>
+    </div>
+
+    <!-- DIFFICULTY SELECTION -->
+    <div class="card hidden" id="difficultyBox">
+        <h2>Choose Difficulty 🎮</h2>
+        <p>Select how many pieces you want to solve</p>
+        
+        <div class="difficulty-grid">
+            <div class="difficulty-card" onclick="startPuzzle(20)">
+                <div class="difficulty-emoji">😊</div>
+                <h3>Easy</h3>
+                <p>20 Pieces</p>
+                <span class="difficulty-time">⏱️ ~5 min</span>
+            </div>
+            
+            <div class="difficulty-card" onclick="startPuzzle(40)">
+                <div class="difficulty-emoji">😎</div>
+                <h3>Medium</h3>
+                <p>40 Pieces</p>
+                <span class="difficulty-time">⏱️ ~10 min</span>
+            </div>
+            
+            <div class="difficulty-card" onclick="startPuzzle(60)">
+                <div class="difficulty-emoji">🔥</div>
+                <h3>Hard</h3>
+                <p>60 Pieces</p>
+                <span class="difficulty-time">⏱️ ~15 min</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PUZZLE GAME -->
+    <div class="puzzle-section hidden" id="puzzleSection">
+        <div class="puzzle-header">
+            <div class="puzzle-info">
+                <span class="puzzle-title" id="puzzleTitle">Assembling...</span>
+                <span class="puzzle-pieces" id="pieceCount">Pieces: 0/0</span>
+            </div>
+            <button class="change-difficulty-btn" onclick="changeDifficulty()">↩️ Change Difficulty</button>
+        </div>
+
+        <div class="puzzle-container">
+            <div class="puzzle-preview" id="puzzlePreview"></div>
+            <div class="puzzle-canvas-wrapper">
+                <canvas id="puzzleCanvas"></canvas>
+            </div>
+        </div>
+        
+        <div class="puzzle-pieces-area" id="puzzlePiecesArea"></div>
+
+        <div class="puzzle-footer">
+            <button onclick="resetPuzzle()">🔄 Reset Puzzle</button>
+            <button onclick="solvePuzzle()">💡 Show Solution</button>
+        </div>
+    </div>
+
+</section>
+
+<footer>Made with ❤️</footer>
+
+<script src="pictureplay.js"></script>
+</body>
+</html>
