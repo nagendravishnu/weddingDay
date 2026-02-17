@@ -62,6 +62,25 @@
     .name-display.circle { width: 140px; height: 140px; }
     .name-display.large { width: auto; font-size: 16px; padding: 12px; }
 
+    .fishing-boy {
+        top: 82px;
+        left: 80px;
+        font-size: 28px;
+    }
+
+    .fishing-line-wrap {
+        top: 112px;
+        left: 56px;
+        height: calc(100vh - 200px);
+        width: 80px;
+    }
+
+    .fishing-progress {
+        font-size: 12px;
+        left: calc(50% + 14px);
+        padding: 4px 8px;
+    }
+
     /* Tighten footer */
     footer { padding: 18px; font-size: 14px; }
 }
@@ -291,6 +310,75 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     text-align: center;
     animation: slideIn 0.5s ease-out;
+}
+
+/* Quiz fishing overlay */
+.fishing-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.fishing-boy {
+    position: absolute;
+    top: 72px;
+    left: clamp(120px, 14vw, 260px);
+    transform: translateX(-50%);
+    font-size: clamp(28px, 2.4vw, 40px);
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.18));
+}
+
+.fishing-line-wrap {
+    position: absolute;
+    top: 108px;
+    left: clamp(90px, 12vw, 220px);
+    height: calc(100vh - 190px);
+    width: 100px;
+}
+
+.fishing-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, #ffc2d6, #ff5f9e);
+    border-radius: 999px;
+}
+
+.fishing-hook {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translateX(-50%);
+    font-size: 20px;
+}
+
+.fishing-girl {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: clamp(26px, 2.2vw, 36px);
+    transition: bottom 0.7s ease;
+    filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.16));
+}
+
+.fishing-progress {
+    position: absolute;
+    left: calc(50% + 20px);
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.88);
+    color: #ff5f9e;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 95, 158, 0.3);
+    transition: bottom 0.7s ease;
+    white-space: nowrap;
 }
 
 @keyframes slideIn {

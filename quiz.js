@@ -112,13 +112,56 @@ let score = 0;
 let time = 20;
 let timer;
 let locked = false;
+let answeredQuestions = 0;
+
+const fishingOverlay = document.getElementById("fishingOverlay");
+const fishingLineWrap = document.getElementById("fishingLineWrap");
+const fishingGirl = document.getElementById("fishingGirl");
+const fishingProgress = document.getElementById("fishingProgress");
+
+function getTotalQuestions() {
+    return textQuestions.length + photoQuestions.length;
+}
+
+function updateFishingTheme() {
+    if (!fishingOverlay || !fishingLineWrap || !fishingGirl || !fishingProgress) return;
+
+    const totalQuestions = getTotalQuestions();
+    const progress = Math.max(0, Math.min(1, answeredQuestions / totalQuestions));
+    const lineHeight = fishingLineWrap.clientHeight;
+    const girlHeight = fishingGirl.offsetHeight || 34;
+    const maxClimb = Math.max(0, lineHeight - girlHeight - 8);
+    const currentBottom = Math.round(progress * maxClimb);
+
+    fishingGirl.style.bottom = currentBottom + "px";
+    fishingProgress.style.bottom = currentBottom + "px";
+    fishingProgress.textContent = Math.round(progress * 100) + "% close";
+}
+
+function showFishingTheme() {
+    if (!fishingOverlay) return;
+    fishingOverlay.classList.remove("hidden");
+    updateFishingTheme();
+}
+
+function hideFishingTheme() {
+    if (!fishingOverlay) return;
+    fishingOverlay.classList.add("hidden");
+}
+
+window.addEventListener("resize", updateFishingTheme);
 
 document.getElementById("accept").onchange = e =>
     document.getElementById("startQuiz").disabled = !e.target.checked;
 
 document.getElementById("startQuiz").onclick = () => {
+    isPhotoQuiz = false;
+    index = 0;
+    score = 0;
+    answeredQuestions = 0;
     document.getElementById("rulesBox").classList.add("hidden");
     document.getElementById("quizBox").classList.remove("hidden");
+    showFishingTheme();
     loadQuestion();
 };
 
@@ -144,6 +187,7 @@ function loadQuestion() {
 
     document.getElementById(timerEl).textContent = time + "s";
     document.getElementById(scoreEl).textContent = "Score: " + score;
+    updateFishingTheme();
     
     const currQuestion = currentQuestions[index];
     
@@ -190,12 +234,14 @@ function startTimer(timerEl = "timer") {
 
 function nextQuestion() {
     clearInterval(timer);
+    if (answeredQuestions < getTotalQuestions()) answeredQuestions++;
     index++;
     loadQuestion();
 }
 
 function showPhotoTransition() {
     clearInterval(timer);
+    hideFishingTheme();
     document.getElementById("quizBox").classList.add("hidden");
     document.getElementById("photoTransitionBox").classList.remove("hidden");
 }
@@ -205,11 +251,13 @@ function startPhotoQuiz() {
     index = 0;
     document.getElementById("photoTransitionBox").classList.add("hidden");
     document.getElementById("photoQuizBox").classList.remove("hidden");
+    showFishingTheme();
     loadQuestion();
 }
 
 function endQuiz() {
     clearInterval(timer);
+    hideFishingTheme();
     document.getElementById("photoQuizBox").classList.add("hidden");
     document.getElementById("resultBox").classList.remove("hidden");
     
