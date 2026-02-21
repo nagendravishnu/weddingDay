@@ -62,6 +62,32 @@
     .name-display.circle { width: 140px; height: 140px; }
     .name-display.large { width: auto; font-size: 16px; padding: 12px; }
 
+    .fishing-boy {
+        top: 82px;
+        left: 80px;
+        font-size: 28px;
+    }
+
+    .fishing-line-wrap {
+        top: 112px;
+        left: 56px;
+        height: calc(100vh - 200px);
+        width: 80px;
+    }
+
+    .fishing-progress {
+        font-size: 12px;
+        left: calc(50% + 14px);
+        padding: 4px 8px;
+    }
+
+    .rain-toggle-btn {
+        right: 12px;
+        bottom: 12px;
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
     /* Tighten footer */
     footer { padding: 18px; font-size: 14px; }
 }
@@ -85,6 +111,44 @@
 .top-header { position: relative; z-index: 3; }
 .center-area { position: relative; z-index: 3; }
 .card { position: relative; z-index: 4; }
+footer { position: relative; z-index: 3; }
+
+.rain-toggle-btn {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 8;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(7, 24, 38, 0.86);
+    color: #e6f7ff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(2, 8, 18, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.rain-toggle-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(2, 8, 18, 0.6);
+}
+
+.rain-toggle-btn[data-rain-enabled="0"] {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(35, 54, 74, 0.18);
+    color: #203449;
+    box-shadow: 0 8px 20px rgba(22, 36, 50, 0.2);
+}
+
+body.night .rain-toggle-btn[data-rain-enabled="0"] {
+    background: rgba(245, 249, 252, 0.92);
+    color: #173049;
+}
 
 /* Night mode overrides for Home page (applied via `body.night`) */
 body.night {
@@ -101,7 +165,8 @@ body.night .header-title, body.night .nav-tab {
     color: #ffffff;
 }
 
-body.night .card {
+body.night .card,
+body.night .quiz-big {
     background: rgba(255,255,255,0.04);
     color: #e6f7ff;
     border: 1px solid rgba(255,255,255,0.06);
@@ -155,6 +220,106 @@ body.night #answer:focus {
     box-shadow: 0 0 0 6px rgba(20,120,200,0.2);
     background: rgba(255,255,255,0.1);
     border-color: rgba(150,210,255,0.6);
+}
+
+/* Force readable text for password fields when shown as plain text */
+body.night #answer,
+body.night #timelinePassword,
+body.night #pictureplayPassword,
+body.night #babynamePassword {
+    color: #f2fbff !important;
+    -webkit-text-fill-color: #f2fbff !important;
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(100,180,255,0.45) !important;
+}
+
+/* Quiz readability fixes in night/rain theme */
+body.night .rules li {
+    color: #e6f7ff;
+    background: rgba(255,255,255,0.06);
+    border-left-color: #5cb9ff;
+}
+
+body.night .rules li:before {
+    color: #8fd4ff;
+}
+
+body.night .scoring-section {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(120,190,255,0.22);
+}
+
+body.night .score-item,
+body.night .score-item .points,
+body.night .score-item .label {
+    color: #1d2b35;
+}
+
+body.night .option-big {
+    background: rgba(255,255,255,0.08);
+    color: #e6f7ff;
+    border-color: rgba(120,190,255,0.22);
+}
+
+body.night .option-big.green,
+body.night .option-big.orange,
+body.night .option-big.blue,
+body.night .option-big.red {
+    color: #1d2b35;
+}
+
+body.night .option-big.green {
+    background: #b6f2c2;
+    border-color: #89d39c;
+}
+
+body.night .option-big.orange {
+    background: #ffd8a8;
+    border-color: #e8b87e;
+}
+
+body.night .option-big.blue {
+    background: #cfe4ff;
+    border-color: #a8c9f5;
+}
+
+body.night .option-big.red {
+    background: #ffc1c1;
+    border-color: #eaa2a2;
+}
+
+/* Couple under umbrella decoration on Home page */
+.umbrella-decoration {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    height: 300px;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.umbrella-decoration img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left bottom;
+}
+
+/* Mobile adjustments for umbrella */
+@media (max-width: 480px) {
+    .umbrella-decoration {
+        width: 200px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 360px) {
+    .umbrella-decoration {
+        width: 160px;
+        height: 180px;
+    }
 }
 
 
@@ -248,6 +413,80 @@ body {
     min-height: calc(100vh - 200px);
 }
 
+.home-center {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+
+.home-card-stack {
+    width: 95%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.home-card-stack .card {
+    width: 100%;
+    max-width: none;
+}
+
+.hands-inline {
+    position: absolute;
+    right: clamp(18px, 4vw, 72px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(220px, 23vw, 350px);
+    opacity: 0.3;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.25));
+}
+
+.hands-inline img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+body.night .hands-inline {
+    opacity: 0.3;
+}
+
+@media (max-width: 1180px) {
+    .home-center {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .home-card-stack {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .hands-inline {
+        position: static;
+        transform: none;
+        width: min(46vw, 320px);
+        opacity: 0.3;
+        margin-top: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hands-inline {
+        width: min(64vw, 230px);
+    }
+}
+
+@media (max-width: 360px) {
+    .hands-inline {
+        width: min(66vw, 190px);
+    }
+}
+
 .card, .quiz-big {
     background: white;
     padding: 50px 45px;
@@ -257,6 +496,75 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     text-align: center;
     animation: slideIn 0.5s ease-out;
+}
+
+/* Quiz fishing overlay */
+.fishing-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.fishing-boy {
+    position: absolute;
+    top: 72px;
+    left: clamp(120px, 14vw, 260px);
+    transform: translateX(-50%);
+    font-size: clamp(28px, 2.4vw, 40px);
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.18));
+}
+
+.fishing-line-wrap {
+    position: absolute;
+    top: 108px;
+    left: clamp(90px, 12vw, 220px);
+    height: calc(100vh - 190px);
+    width: 100px;
+}
+
+.fishing-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, #ffc2d6, #ff5f9e);
+    border-radius: 999px;
+}
+
+.fishing-hook {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translateX(-50%);
+    font-size: 20px;
+}
+
+.fishing-girl {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: clamp(26px, 2.2vw, 36px);
+    transition: bottom 0.7s ease;
+    filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.16));
+}
+
+.fishing-progress {
+    position: absolute;
+    left: calc(50% + 20px);
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.88);
+    color: #ff5f9e;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 95, 158, 0.3);
+    transition: bottom 0.7s ease;
+    white-space: nowrap;
 }
 
 @keyframes slideIn {

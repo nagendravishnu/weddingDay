@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz ❤️</title>
+    <script src="auth-guard.js"></script>
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="night">
 
 <header class="top-header">
     <div class="header-content">
@@ -19,6 +20,16 @@
         </nav>
     </div>
 </header>
+
+<div class="fishing-overlay hidden" id="fishingOverlay" aria-hidden="true">
+    <div class="fishing-boy">🧑‍🦱 🎣</div>
+    <div class="fishing-line-wrap" id="fishingLineWrap">
+        <span class="fishing-line"></span>
+        <span class="fishing-hook">🪝</span>
+        <span class="fishing-girl" id="fishingGirl">👧</span>
+        <span class="fishing-progress" id="fishingProgress">0% close</span>
+    </div>
+</div>
 
 <section class="center-area">
 
@@ -125,5 +136,8 @@
 </section>
 
 <script src="quiz.js"></script>
+<script src="rain.js" defer></script>
 </body>
 </html>
+
+
