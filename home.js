@@ -1,7 +1,9 @@
 // Together timer
 const startDate = new Date("2022-10-16T00:00:00");
 const VERIFIED_KEY = "wd_home_verified";
+const VERIFIED_AT_KEY = "wd_home_verified_at";
 const RETURN_KEY = "wd_after_verify";
+const VERIFICATION_MAX_AGE_MS = 30 * 60 * 1000; // 30 minutes
 
 setInterval(() => {
     const now = new Date();
@@ -24,7 +26,23 @@ let attempts = 0;
 
 function isHomeVerified() {
     try {
-        return sessionStorage.getItem(VERIFIED_KEY) === "1";
+        const verified = sessionStorage.getItem(VERIFIED_KEY) === "1";
+        const verifiedAt = Number(sessionStorage.getItem(VERIFIED_AT_KEY));
+
+        if (!verified || !Number.isFinite(verifiedAt)) {
+            sessionStorage.removeItem(VERIFIED_KEY);
+            sessionStorage.removeItem(VERIFIED_AT_KEY);
+            return false;
+        }
+
+        const isExpired = Date.now() - verifiedAt > VERIFICATION_MAX_AGE_MS;
+        if (isExpired) {
+            sessionStorage.removeItem(VERIFIED_KEY);
+            sessionStorage.removeItem(VERIFIED_AT_KEY);
+            return false;
+        }
+
+        return true;
     } catch (e) {
         return false;
     }
@@ -63,6 +81,7 @@ function checkAnswer() {
 
         try {
             sessionStorage.setItem(VERIFIED_KEY, "1");
+            sessionStorage.setItem(VERIFIED_AT_KEY, String(Date.now()));
         } catch (e) {
             // Ignore storage issues and continue the flow.
         }
@@ -75,7 +94,13 @@ function checkAnswer() {
             returnPage = "";
         }
 
-        if (returnPage && returnPage !== "index.html") {
+        const normalizedReturn = returnPage.toLowerCase();
+        if (
+            returnPage &&
+            normalizedReturn !== "index.html" &&
+            normalizedReturn !== "/index.html" &&
+            normalizedReturn !== "/"
+        ) {
             window.location.href = returnPage;
             return;
         }
