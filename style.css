@@ -1819,6 +1819,39 @@ footer {
     box-shadow: 0 8px 25px rgba(255, 95, 158, 0.4);
 }
 
+.puzzle-complete {
+    margin: 22px auto 0;
+    max-width: 760px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(182, 242, 194, 0.35), rgba(207, 228, 255, 0.35));
+    border: 1px solid rgba(93, 201, 136, 0.45);
+    color: #2f513e;
+    box-shadow: 0 12px 24px rgba(18, 41, 26, 0.12);
+}
+
+.puzzle-complete h3 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    color: #2d8f59;
+}
+
+.puzzle-complete p {
+    margin: 0;
+    font-size: 15px;
+}
+
+body.night .puzzle-complete {
+    background: linear-gradient(135deg, rgba(31, 78, 61, 0.75), rgba(23, 57, 94, 0.72));
+    border-color: rgba(137, 211, 156, 0.55);
+    color: #d7fce4;
+}
+
+body.night .puzzle-complete h3 {
+    color: #9ff2c0;
+}
+
 /* COMING SOON STYLE */
 .coming-soon {
     text-align: center;

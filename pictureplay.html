@@ -86,10 +86,15 @@
         </div>
         
         <div class="puzzle-pieces-area" id="puzzlePiecesArea"></div>
-
         <div class="puzzle-footer">
-            <button onclick="resetPuzzle()">🔄 Reset Puzzle</button>
-            <button onclick="solvePuzzle()">💡 Show Solution</button>
+            <button id="undoLastBtn" onclick="undoLastPlacement()">&#8617; Undo Last</button>
+            <button onclick="resetPuzzle()">&#128260; Reset Puzzle</button>
+            <button onclick="solvePuzzle()">&#128161; Show Solution</button>
+        </div>
+
+        <div class="puzzle-complete hidden" id="puzzleCompleteMessage">
+            <h3>Puzzle Completed!</h3>
+            <p>Perfect placement verified. All pieces are in the correct position.</p>
         </div>
     </div>
 
@@ -101,5 +106,6 @@
 <script src="rain.js" defer></script>
 </body>
 </html>
+
 
 

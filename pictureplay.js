@@ -4,6 +4,7 @@ const PICTURE_URL = "images/pictureplay1.jpg";
 let currentDifficulty = 0;
 let puzzlePieces = [];
 let placedPieces = [];
+let placementHistory = [];
 let canvas;
 let ctx;
 let imageObj;
@@ -57,6 +58,8 @@ class PuzzlePiece {
         this.element = null;
         this.correctX = x;      // Grid position X (which cell it belongs in)
         this.correctY = y;      // Grid position Y (which cell it belongs in)
+        this.correctCol = null;
+        this.correctRow = null;
         this.gridCol = 0;
         this.gridRow = 0;
         this.gridX = x;
@@ -108,24 +111,8 @@ class PuzzlePiece {
 
         // Double-click a piece on canvas to return it to the bottom pieces area
         div.addEventListener("dblclick", (e) => {
-            const piecesArea = document.getElementById("puzzlePiecesArea");
             if (div.parentElement && div.parentElement.id !== "puzzlePiecesArea") {
-                piecesArea.appendChild(div);
-                div.style.position = "static";
-                div.style.left = "";
-                div.style.top = "";
-                div.style.width = this.width + "px";
-                div.style.height = this.height + "px";
-                div.style.opacity = "1";
-                div.draggable = true;
-                this.isPlaced = false;
-                // clear grid tracking
-                this.gridCol = null;
-                this.gridRow = null;
-                // remove from placedPieces if present
-                const idx = placedPieces.indexOf(this.index);
-                if (idx !== -1) placedPieces.splice(idx, 1);
-                updatePieceCount();
+                returnPieceToTray(this);
             }
         });
         
@@ -197,6 +184,8 @@ function initializePuzzle(numPieces) {
 function createPuzzlePieces(numPieces, scaleX, scaleY) {
     puzzlePieces = [];
     placedPieces = [];
+    placementHistory = [];
+    hideCompletionMessage();
     
     // Calculate grid - determines number of cells
     const cols = Math.ceil(Math.sqrt(numPieces));
@@ -221,8 +210,10 @@ function createPuzzlePieces(numPieces, scaleX, scaleY) {
             const cellY = row * pieceHeight;
             
             const piece = new PuzzlePiece(cellX, cellY, pieceWidth, pieceHeight, index, canvas, imageObj);
-            piece.gridCol = col;
-            piece.gridRow = row;
+            piece.correctCol = col;
+            piece.correctRow = row;
+            piece.gridCol = null;
+            piece.gridRow = null;
             piece.gridX = cellX;
             piece.gridY = cellY;
             puzzlePieces.push(piece);
@@ -261,6 +252,7 @@ function createPuzzlePieces(numPieces, scaleX, scaleY) {
     console.log("Pieces created: " + puzzlePieces.length);
     setupDragDrop();
     renderPuzzle();
+    updateUndoButton();
 }
 
 function setupDragDrop() {
@@ -368,19 +360,22 @@ function positionPieceOnCanvas(pieceIndex, x, y) {
     piece.element.style.width = grid.displayCellWidth + "px";
     piece.element.style.height = grid.displayCellHeight + "px";
     
+    // Check against the piece's real target cell (not its current cell).
+    const isCorrectCell = (validCol === piece.correctCol && validRow === piece.correctRow);
+
     // Update piece position tracking
     piece.gridCol = validCol;
     piece.gridRow = validRow;
     piece.gridX = cellX;
     piece.gridY = cellY;
     
-    // Check if placed in correct cell (compare grid indices)
-    const isCorrectCell = (piece.gridCol === validCol && piece.gridRow === validRow);
-    
     if (isCorrectCell && !piece.isPlaced) {
         console.log("✓ Piece", pieceIndex, "placed in CORRECT cell!", validCol, validRow);
         piece.isPlaced = true;
-        placedPieces.push(pieceIndex);
+        if (!placedPieces.includes(pieceIndex)) {
+            placedPieces.push(pieceIndex);
+        }
+        placementHistory.push(pieceIndex);
         
         piece.element.style.opacity = "1";
         piece.element.style.zIndex = "1000";
@@ -391,8 +386,10 @@ function positionPieceOnCanvas(pieceIndex, x, y) {
         updatePieceCount();
         renderPuzzle();
         
-        if (placedPieces.length === currentDifficulty) {
+        if (isPuzzleComplete()) {
             celebratePuzzleComplete();
+        } else {
+            hideCompletionMessage();
         }
     } else if (!piece.isPlaced) {
         console.log("Piece", pieceIndex, "placed in wrong cell - target:", piece.correctX, piece.correctY);
@@ -401,10 +398,117 @@ function positionPieceOnCanvas(pieceIndex, x, y) {
         piece.element.style.zIndex = "10";
         piece.element.style.backgroundColor = "rgba(255, 143, 177, 0.05)";
     }
+
+    updateUndoButton();
+}
+
+function hideCompletionMessage() {
+    const box = document.getElementById("puzzleCompleteMessage");
+    if (box) box.classList.add("hidden");
+}
+
+function showCompletionMessage() {
+    const box = document.getElementById("puzzleCompleteMessage");
+    if (!box) return;
+    const diffText = {20: "Easy", 40: "Medium", 60: "Hard"}[currentDifficulty] || "";
+    const heading = box.querySelector("h3");
+    const para = box.querySelector("p");
+    if (heading) heading.textContent = "Puzzle Completed!";
+    if (para) para.textContent = `Perfect placement verified for ${diffText} mode (${currentDifficulty} pieces).`;
+    box.classList.remove("hidden");
+}
+
+function updateUndoButton() {
+    const undoBtn = document.getElementById("undoLastBtn");
+    if (!undoBtn) return;
+    undoBtn.disabled = placementHistory.length === 0;
+}
+
+function isPieceCorrectlyPlaced(piece) {
+    if (!piece || !piece.element || !piece.element.parentElement) return false;
+    const onCanvas = piece.element.parentElement.id !== "puzzlePiecesArea";
+    return onCanvas &&
+        piece.isPlaced &&
+        piece.gridCol === piece.correctCol &&
+        piece.gridRow === piece.correctRow;
+}
+
+function syncPlacedPieces() {
+    placedPieces = puzzlePieces
+        .filter(isPieceCorrectlyPlaced)
+        .map((piece) => piece.index);
+}
+
+function isPuzzleComplete() {
+    syncPlacedPieces();
+    return currentDifficulty > 0 && placedPieces.length === currentDifficulty;
+}
+
+function returnPieceToTray(piece, removeFromHistory = true) {
+    const piecesArea = document.getElementById("puzzlePiecesArea");
+    if (!piecesArea || !piece || !piece.element) return;
+    const wasPlaced = piece.isPlaced;
+
+    piecesArea.appendChild(piece.element);
+    piece.element.style.position = "static";
+    piece.element.style.left = "";
+    piece.element.style.top = "";
+    piece.element.style.width = piece.width + "px";
+    piece.element.style.height = piece.height + "px";
+    piece.element.style.opacity = "1";
+    piece.element.style.zIndex = "";
+    piece.element.draggable = true;
+    piece.element.style.boxShadow = "";
+    piece.element.style.backgroundColor = "";
+
+    piece.isPlaced = false;
+    piece.gridCol = null;
+    piece.gridRow = null;
+
+    const placedIdx = placedPieces.indexOf(piece.index);
+    if (placedIdx !== -1) placedPieces.splice(placedIdx, 1);
+    if (wasPlaced && removeFromHistory) {
+        for (let i = placementHistory.length - 1; i >= 0; i--) {
+            if (placementHistory[i] === piece.index) {
+                placementHistory.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    hideCompletionMessage();
+    updatePieceCount();
+    updateUndoButton();
+}
+
+function undoLastPlacement() {
+    if (!placementHistory.length) return;
+
+    let pieceIndex = null;
+    while (placementHistory.length) {
+        const candidate = placementHistory.pop();
+        const candidatePiece = puzzlePieces[candidate];
+        if (candidatePiece && candidatePiece.isPlaced) {
+            pieceIndex = candidate;
+            break;
+        }
+    }
+
+    if (pieceIndex === null) {
+        updateUndoButton();
+        return;
+    }
+
+    const piece = puzzlePieces[pieceIndex];
+    returnPieceToTray(piece, false);
 }
 
 function updatePieceCount() {
-    document.getElementById("pieceCount").textContent = `Pieces: ${placedPieces.length}/${currentDifficulty}`;
+    syncPlacedPieces();
+    const pieceCount = document.getElementById("pieceCount");
+    if (pieceCount) {
+        pieceCount.textContent = `Pieces: ${placedPieces.length}/${currentDifficulty}`;
+    }
 }
 
 function renderPuzzle() {
@@ -460,7 +564,10 @@ function solvePuzzle() {
     puzzlePieces.forEach((piece, index) => {
         if (!piece.isPlaced) {
             piece.isPlaced = true;
-            placedPieces.push(index);
+            if (!placedPieces.includes(index)) {
+                placedPieces.push(index);
+            }
+            placementHistory.push(index);
             
             // Move to canvas if not already there
             if (piece.element.parentElement.id === "puzzlePiecesArea") {
@@ -469,20 +576,31 @@ function solvePuzzle() {
             }
             
             // Position at correct grid cell
-            piece.element.style.left = piece.correctX + "px";
-            piece.element.style.top = piece.correctY + "px";
-            piece.element.style.width = grid.cellWidth + "px";
-            piece.element.style.height = grid.cellHeight + "px";
+            const canvas = document.getElementById("puzzleCanvas");
+            const canvasRect = canvas.getBoundingClientRect();
+            const wrapperRect = canvasWrapper.getBoundingClientRect();
+            const canvasOffsetX = canvasRect.left - wrapperRect.left;
+            const canvasOffsetY = canvasRect.top - wrapperRect.top;
+            const cellX = piece.correctCol * grid.displayCellWidth;
+            const cellY = piece.correctRow * grid.displayCellHeight;
+
+            piece.element.style.left = (cellX + canvasOffsetX) + "px";
+            piece.element.style.top = (cellY + canvasOffsetY) + "px";
+            piece.element.style.width = grid.displayCellWidth + "px";
+            piece.element.style.height = grid.displayCellHeight + "px";
             piece.element.style.opacity = "1";
             piece.element.style.zIndex = "1000";
             piece.element.draggable = false;
             piece.element.style.boxShadow = "0 0 20px rgba(255, 95, 158, 0.5)";
             piece.element.style.backgroundColor = "rgba(255, 95, 158, 0.1)";
+            piece.gridCol = piece.correctCol;
+            piece.gridRow = piece.correctRow;
         }
     });
     
     renderPuzzle();
     updatePieceCount();
+    updateUndoButton();
     celebratePuzzleComplete();
 }
 
@@ -513,7 +631,10 @@ function resetPuzzle() {
         }
     });
     placedPieces = [];
+    placementHistory = [];
+    hideCompletionMessage();
     updatePieceCount();
+    updateUndoButton();
     renderPuzzle();
 }
 
@@ -522,29 +643,19 @@ function changeDifficulty() {
     document.getElementById("difficultyBox").classList.remove("hidden");
     document.getElementById("puzzleCanvas").width = 0;
     document.getElementById("puzzleCanvas").height = 0;
+    currentDifficulty = 0;
     puzzlePieces = [];
     placedPieces = [];
+    placementHistory = [];
+    hideCompletionMessage();
+    updatePieceCount();
+    updateUndoButton();
 }
 
 function celebratePuzzleComplete() {
-    ctx.fillStyle = "rgba(255, 95, 158, 0.2)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw celebration text
-    ctx.fillStyle = "#ff5f9e";
-    ctx.font = "bold 40px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("🎉 Complete! 🎉", canvas.width / 2, canvas.height / 2);
-    
-    setTimeout(() => {
-        showCompletionModal();
-    }, 1500);
+    showCompletionMessage();
 }
 
-function showCompletionModal() {
-    const diffText = {20: "Easy", 40: "Medium", 60: "Hard"}[currentDifficulty];
-    alert(`🎊 Congratulations! 🎊\n\nYou completed the ${diffText} puzzle with ${currentDifficulty} pieces!\n\nWould you like to try another difficulty?`);
-}
 
 // Allow Enter key to submit password
 document.addEventListener("DOMContentLoaded", () => {
@@ -561,3 +672,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // Ensure functions are available on window for inline onclick handlers
 window.verifyPicturePlayPassword = verifyPicturePlayPassword;
 window.togglePicturePlayPassword = togglePicturePlayPassword;
+window.undoLastPlacement = undoLastPlacement;
+
+
